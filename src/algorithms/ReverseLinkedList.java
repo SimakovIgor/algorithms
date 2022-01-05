@@ -16,6 +16,9 @@ package algorithms;
  */
 public class ReverseLinkedList {
 
+    /**
+     * Итерационное
+     */
     public ListNode reverseList(ListNode head) {
         ListNode prev = null;
         while (head != null) {
@@ -25,5 +28,19 @@ public class ReverseLinkedList {
             head = next;
         }
         return prev;
+    }
+
+    /**
+     * Решение с рекурсией
+     */
+    public ListNode reverseListRec(ListNode head) {
+        return reverseListRec(head, null);
+    }
+
+    public ListNode reverseListRec(ListNode head, ListNode prev) {
+        if (head == null) return prev;
+        ListNode next = head.next;
+        head.next = prev;
+        return reverseListRec(next, head);
     }
 }
