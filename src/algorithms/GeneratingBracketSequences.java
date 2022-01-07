@@ -30,8 +30,12 @@ public class GeneratingBracketSequences {
             brackets[index] = ')';
             generate(diff - 1, brackets, index + 1, k);
         }
-        if (index == k && diff == 0)
-            System.out.println(Arrays.toString(brackets));
+        if (index == k && diff == 0) {
+            for (char bracket : brackets) {
+                System.out.print(bracket);
+            }
+            System.out.println();
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package algorithms;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,5 +50,22 @@ public class StonesAndJewelry {
             }
         }
         return res;
+    }
+
+    public static void stonesAndJewelryIndexOf() throws Exception{
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+
+        String J = r.readLine();
+        String S = r.readLine();
+
+        int result = 0;
+        for (int i = 0; i < S.length(); ++i) {
+            char ch = S.charAt(i);
+            if (J.indexOf(ch) >= 0) {
+                ++result;
+            }
+        }
+
+        System.out.println(result);
     }
 }

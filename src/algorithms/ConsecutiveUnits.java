@@ -14,6 +14,7 @@ public class ConsecutiveUnits {
      * Итеративное решение
      */
     public static int countIt(int[] s) {
+
         int cur = 0, max = 0;
         for (int i = 0; i < s.length; i++) {
             if (s[i] == 1) {
@@ -37,6 +38,6 @@ public class ConsecutiveUnits {
         }
 
         return countRec(s, count, sLength -= 1, max);
-
     }
 }
+

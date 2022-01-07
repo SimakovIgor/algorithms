@@ -7,9 +7,8 @@ import java.util.Arrays;
  */
 public class DeleteDuplicatesFromArr {
     public static void main(String[] args) {
-        int[] s = {0, 0, 0, 1, 1, 2, 3, 4, 4, 4, 5, 6, 7};
-        deleteDuplicates(s);
-        System.out.println(Arrays.toString(s));
+        int[] s = {0, 0, 0, 1, 1, 2, 3, 4, 4, 4, 5, 6, 7, 7};
+        System.out.println(Arrays.toString(deleteDuplicates(s)));
 
         int[] s1 = {0, 0, 0, 1, 1, 2, 3, 4, 4, 4, 5, 6, 7};
         System.out.println(Arrays.toString(deleteDuplicatesWithExtraSpace(s1)));
@@ -19,22 +18,18 @@ public class DeleteDuplicatesFromArr {
      * Удаляет дубликаты в текущем массиве и возвращает длину отсортированной части
      * Time - On
      * Space - O1
-     *
-     * @param s - массив для сортировки
-     * @return - длина отсортированной части
      */
-    public static int deleteDuplicates(int[] s) {
+    public static int[] deleteDuplicates(int[] s) {
         int j = 0;
         for (int i = 1; i < s.length; i++) {
-            if (s[j] != s[i]) s[++j] = s[i];
+            if (s[j] != s[i])
+                s[++j] = s[i];
         }
-        return j;
+        return Arrays.copyOf(s, j + 1);
     }
 
     /**
      * С использованием доп памяти
-     * @param s - массив для сортироки
-     * @return - новый массив
      * Time - On
      * Space - On
      */
@@ -44,7 +39,6 @@ public class DeleteDuplicatesFromArr {
             if (res[j] != s[i])
                 res[++j] = s[i];
         }
-
         return res;
     }
 }
