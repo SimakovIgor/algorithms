@@ -1,6 +1,8 @@
 package algorithms;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Дано целое число n. Требуется вывести все правильные скобочные последовательности длины 2 * n,
@@ -10,32 +12,63 @@ import java.util.Arrays;
 public class GeneratingBracketSequences {
     public static void main(String[] args) {
         int n = 3;
-        int k = n * 2;
-        generate(0, new char[k], 0, k);
+        generateParenthesis(n);
     }
 
-    /*
-     * В этом способе предполагается, что мы начинаем перебирать последовательности с пустого списка. После того, как
-     * в список добавлена скобка (открывающая или закрывающая), снова выполняется вызов рекурсии и проверка условий.
-     * Какие могут быть условия? Необходимо следить за разницей между открывающими и закрывающими скобками
-     * (переменная diff) — нельзя добавить закрывающую скобку в список, если эта разница не является положительной,
-     * иначе скобочная последовательность перестанет быть правильной. Осталось аккуратно реализовать это в коде.
+    public static void generate(String cur, int open, int close, int n) {
+        if (cur.length() == 2 * n) {
+            System.out.println(cur);
+            return;
+        }
+        if (open < n) generate(cur + "(", open + 1, close, n);
+        if (close < open) generate(cur + ")", open, close + 1, n);
+    }
+
+    public static List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        generate("", 0, 0, n, list);
+        return list;
+    }
+
+    public static void generate(String cur,  int open, int close, int n, List<String> list) {
+        if (cur.length() == 2 * n) {
+            list.add(cur);
+            return;
+        }
+        if (open < n) generate(cur + "(", open + 1, close, n, list);
+        if (close < open) generate(cur + ")", open, close + 1, n, list);
+    }
+
+
+    public List<String> generateParenthesis1(int n) {
+        List<String> combinations = new ArrayList<>();
+        generateAll(new char[2 * n], 0, combinations);
+        return combinations;
+    }
+
+    public void generateAll(char[] current, int pos, List<String> result) {
+        if (pos == current.length) {
+            if (valid(current))
+                result.add(new String(current));
+        } else {
+            current[pos] = '(';
+            generateAll(current, pos+1, result);
+            current[pos] = ')';
+            generateAll(current, pos+1, result);
+        }
+    }
+
+    /**
+     * To check whether a sequence is valid, we keep track of balance, the net number of opening brackets minus
+     * closing brackets. If it falls below zero at any time, or doesn't end in zero, the sequence is invalid - otherwise it is valid.
      */
-    public static void generate(int diff, char[] brackets, int index, int k) {
-        if (diff <= k - index - 1) {
-            brackets[index] = '(';
-            generate(diff + 1, brackets, index + 1, k);
+    public boolean valid(char[] current) {
+        int balance = 0;
+        for (char c: current) {
+            if (c == '(') balance++;
+            else balance--;
+            if (balance < 0) return false;
         }
-        if (diff > 0) {
-            brackets[index] = ')';
-            generate(diff - 1, brackets, index + 1, k);
-        }
-        if (index == k && diff == 0) {
-            for (char bracket : brackets) {
-                System.out.print(bracket);
-            }
-            System.out.println();
-        }
+        return (balance == 0);
     }
-
 }
