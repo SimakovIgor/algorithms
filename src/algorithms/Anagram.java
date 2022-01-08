@@ -1,6 +1,8 @@
 package algorithms;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Даны две строки, состоящие из строчных латинских букв. Требуется определить, являются ли эти строки анаграммами,
@@ -8,15 +10,14 @@ import java.util.Arrays;
  */
 public class Anagram {
     public static void main(String[] args) {
-        System.out.println(isAnagram("aquis", "aqius"));
+        System.out.println(isAnagram3("aquis", "aqius"));
+        System.out.println(isAnagram3("aquii", "aqius"));
     }
 
     /**
      * Решение  reverse string
      */
-    public static boolean defineReverse(String s1, String s2) {
-        if (s1.length()!=s2.length()) return false;
-
+    public static boolean isAnagram3(String s1, String s2) {
         char[] s1Arr = s1.toCharArray();
         char[] s2Arr = s2.toCharArray();
 
@@ -37,5 +38,19 @@ public class Anagram {
             if (i != 0)
                 return false;
         return true;
+    }
+
+    public static boolean isAnagram2(String s1, String s2) {
+        return mapFromString(s1).equals(mapFromString(s2));
+    }
+
+    public static Map<Character, Integer> mapFromString(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (map.containsKey(c)) map.put(c, map.get(c) + 1);
+            else map.put(c, 1);
+        }
+        return map;
     }
 }
