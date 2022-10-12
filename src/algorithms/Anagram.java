@@ -1,8 +1,6 @@
 package algorithms;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Даны две строки, состоящие из строчных латинских букв. Требуется определить, являются ли эти строки анаграммами,
@@ -12,6 +10,13 @@ public class Anagram {
     public static void main(String[] args) {
         System.out.println(isAnagram3("aquis", "aqius"));
         System.out.println(isAnagram3("aquii", "aqius"));
+
+        List<String> list = List.of("cba", "abc", "qew", "weq", "hgf", "jkl", "bca");
+
+        Map<String, TreeSet<String>> stringTreeSetMap = groupAnagram(list);
+
+        System.out.println(stringTreeSetMap);
+
     }
 
     /**
@@ -46,11 +51,33 @@ public class Anagram {
 
     public static Map<Character, Integer> mapFromString(String s) {
         Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (map.containsKey(c)) map.put(c, map.get(c) + 1);
-            else map.put(c, 1);
-        }
+        for (Character c : s.toCharArray())
+            map.put(c, map.getOrDefault(c, 0) + 1);
         return map;
+    }
+
+    /**
+     * Сгруппировать анаграммы + отсортировать сгруппированные анаграмы
+     *
+     * @param strings - список слов для группировки
+     * @return - сгруппированные анаграмы
+     */
+    public static Map<String, TreeSet<String>> groupAnagram(List<String> strings) {
+        Map<String, TreeSet<String>> ans = new HashMap<>();
+
+        for (String word : strings) {
+            char[] charArray = word.toCharArray();
+            Arrays.sort(charArray);
+            String sortedKey = new String(charArray);
+
+            ans.computeIfAbsent(sortedKey, key -> {
+                System.out.println("!!key" + key);
+                TreeSet<String> treeSet = new TreeSet<>();
+                treeSet.add(word);
+                return treeSet;
+            }).add(word);
+        }
+
+        return ans;
     }
 }

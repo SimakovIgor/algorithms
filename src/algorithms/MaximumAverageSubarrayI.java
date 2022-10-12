@@ -2,10 +2,6 @@ package algorithms;
 
 public class MaximumAverageSubarrayI {
 
-    public static void main(String[] args) {
-        int[] ints = {-1};
-        System.out.println(findMaxAverage(ints, 1));
-    }
 
     /**
      * You are given an integer array nums consisting of n elements, and an integer k.
