@@ -10,22 +10,22 @@ public class NormalizeString {
 
     public static String norm(String s) {
         boolean first = true;
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == ' ') {
                 if (first) {
-                    res += c;
+                    res.append(c);
                     first = false;
                 }
             } else {
-                res += c;
+                res.append(c);
                 first = true;
             }
         }
 
-        return res.trim();
+        return res.toString().trim();
     }
     public static String normWithRegex(String s) {
         return s.replaceAll("\\s+", " ").trim();
