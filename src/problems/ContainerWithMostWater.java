@@ -29,7 +29,7 @@ public class ContainerWithMostWater {
 
         while (leftPointer != rightPointer) {
             int currentMaxWater = min(height[leftPointer], height[rightPointer])
-                            * (rightPointer - leftPointer);
+                    * (rightPointer - leftPointer);
             asn = max(asn, currentMaxWater);
 
             if (height[leftPointer] >= height[rightPointer]) {
@@ -40,4 +40,5 @@ public class ContainerWithMostWater {
         }
         return asn;
     }
+
 }
